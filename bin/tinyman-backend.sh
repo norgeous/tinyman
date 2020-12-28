@@ -81,7 +81,9 @@ case $COMMAND in
     echo 'Access-Control-Allow-Origin: *'
     echo 'Connection: close'
     echo
-    curl "http://${PARAM['ip']}:8008/setup/eureka_info?options=detail"
+    [[ "${PARAM['action']}" == "get" ]]    && curl "http://${PARAM['ip']}:8008/setup/eureka_info?options=detail"
+    [[ "${PARAM['action']}" == "yt_get" ]] && curl -H "Content-Type: application/json" "http://${PARAM['ip']}:8008/apps/YouTube" -X GET
+    [[ "${PARAM['action']}" == "yt_set" ]] && curl -H "Content-Type: application/json" "http://${PARAM['ip']}:8008/apps/YouTube" -X POST -d "v=oHg5SJYRHA0"
     ;;
   *)
     echo -n "Unknown command: $COMMAND"

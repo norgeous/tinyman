@@ -9,7 +9,7 @@ const Chromecast = ({ip}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`http://${ip}:8008/setup/eureka_info?options=detail`);
+        const res = await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=get`);
         const json = await res.json();
         setData(json);
       } catch (e) {
@@ -19,7 +19,36 @@ const Chromecast = ({ip}) => {
     fetchData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return <>chromecast @ {ip} {typeof data}</>
+  const click1 = async (control) => {
+    try {
+      const res = await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=yt_get`);
+      const text = await res.text();
+      alert(text);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const click2 = async (control) => {
+    try {
+      const res = await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=yt_aet`);
+      const text = await res.text();
+      alert(text);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  return (
+    <div>
+      {data?.name}
+      chromecast @ {ip}
+      <div>
+        <button onClick={click1}>yt_get</button>
+        <button onClick={click2}>yt_set</button>
+      </div>
+      {data}
+    </div>
+  );
 };
 
 export default Chromecast;
