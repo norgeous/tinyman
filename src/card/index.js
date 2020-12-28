@@ -24,7 +24,6 @@ const HydratedCard = ({endpoint}) => {
         try {
           setStatus('loading');
           const res = await fetch(`${endpoint}:9009/sysinfo`);
-          // const res = await fetchTimeout(`${endpoint}:9009/`, 3000);
           const json = await res.json();
           setData(json);
           setTimeOfNextUpdate(Date.now() + (json?.ENUM_TIME*1000||0) + 10000);

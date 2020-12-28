@@ -10,7 +10,7 @@ const Controls = ({endpoint}) => {
         const res = await fetch(`${endpoint}:9009/list`);
         const json = await res.json();
         console.log(json);
-        setControls(json);
+        if(json.every(i => (typeof i === "string"))) setControls(json);
       } catch (e) {
         console.log(e);
       }
