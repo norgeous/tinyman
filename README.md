@@ -18,6 +18,21 @@ bash <(curl -s https://raw.githubusercontent.com/norgeous/tinyman/master/bin/ins
 
 ### Usage
 
+##### tinyman
+
+```sh
+systemctl status tinyman-frontend
+systemctl status tinyman-backend
+```
+
+##### pi-model
+
+```sh
+pi-model
+```
+
+ex output: `4B 1.2`
+
 ##### sysinfo
 
 ```sh
