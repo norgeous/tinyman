@@ -89,6 +89,7 @@ case $COMMAND in
     [[ "${PARAM['action']}" == "stop" ]]    && chromecast --host ${PARAM['ip']} stop
     [[ "${PARAM['action']}" == "pause" ]]   && chromecast --host ${PARAM['ip']} pause
     [[ "${PARAM['action']}" == "unpause" ]] && chromecast --host ${PARAM['ip']} unpause
+    echo :end
     ;;
   *)
     echo -n "Unknown command: $COMMAND"
