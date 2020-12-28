@@ -7,7 +7,7 @@ read REQ
 REQ_URL=$(echo $REQ | cut -f2 -d' ')
 COMMAND=$(echo ${REQ_URL#?} | cut -f1 -d'?')
 QUERY_STRING=$(echo ${REQ_URL#?} | cut -f2 -d'?')
-declare -A PARAM; for i in "${array[@]}"; do IFS="=" ; set -- $i; PARAM[$1]=$2; done
+declare -A PARAM; for i in "${QUERY_STRING[@]}"; do IFS="=" ; set -- $i; PARAM[$1]=$2; done
 
 case $COMMAND in
   '')
