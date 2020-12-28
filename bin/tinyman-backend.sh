@@ -81,9 +81,10 @@ case $COMMAND in
     echo 'Access-Control-Allow-Origin: *'
     echo 'Connection: close'
     echo
+    echo test
     echo ${PARAM["ip"]}
     echo "${PARAM['ip']}"
-    curl "http://${PARAM['ip']}:8008/setup/eureka_info?options=detail"
+    # curl "http://${PARAM['ip']}:8008/setup/eureka_info?options=detail"
     ;;
   *)
     echo -n "Unknown command: $COMMAND"
