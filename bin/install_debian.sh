@@ -36,6 +36,7 @@ chmod a+x "/opt/tinyman/bin/service/tinyman-backend.sh"
 cp "/opt/tinyman/bin/service/tinyman-backend.service" "/etc/systemd/system/tinyman-backend.service"
 systemctl enable tinyman-backend
 systemctl start tinyman-backend
+echo
 
 echo "install tinyman frontend server..."
 chmod a+x "/opt/tinyman/bin/service/tinyman-frontend.sh"
