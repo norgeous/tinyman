@@ -82,6 +82,10 @@ case $COMMAND in
     echo 'Connection: close'
     echo
     echo test
+    echo $REQ_URL
+    echo $COMMAND
+    echo $QUERY_STRING
+    echo $PARAM
     echo ${PARAM["ip"]}
     echo "${PARAM['ip']}"
     # curl "http://${PARAM['ip']}:8008/setup/eureka_info?options=detail"
