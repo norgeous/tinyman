@@ -81,12 +81,17 @@ case $COMMAND in
     echo 'Access-Control-Allow-Origin: *'
     echo 'Connection: close'
     echo
-    [[ "${PARAM['action']}" == "get" ]]    && curl "http://${PARAM['ip']}:8008/setup/eureka_info?options=detail"
-    [[ "${PARAM['action']}" == "yt_get" ]] && curl -H "Content-Type: application/json" "http://${PARAM['ip']}:8008/apps/YouTube" -X GET
-    [[ "${PARAM['action']}" == "yt_set" ]] && curl -H "Content-Type: application/json" "http://${PARAM['ip']}:8008/apps/YouTube" -X POST -d "v=oHg5SJYRHA0"
+    [[ "${PARAM['action']}" == "info" ]]    && curl "http://${PARAM['ip']}:8008/setup/eureka_info?options=detail"
+    [[ "${PARAM['action']}" == "status" ]]  && chromecast --host ${PARAM['ip']} status
+    [[ "${PARAM['action']}" == "mute" ]]    && chromecast --host ${PARAM['ip']} mute
+    [[ "${PARAM['action']}" == "unmute" ]]  && chromecast --host ${PARAM['ip']} unmute
+    [[ "${PARAM['action']}" == "stop" ]]    && chromecast --host ${PARAM['ip']} stop
+    [[ "${PARAM['action']}" == "pause" ]]   && chromecast --host ${PARAM['ip']} pause
+    [[ "${PARAM['action']}" == "unpause" ]] && chromecast --host ${PARAM['ip']} unpause
     ;;
   *)
     echo -n "Unknown command: $COMMAND"
     ;;
 esac
 
+# 192.168.0.243

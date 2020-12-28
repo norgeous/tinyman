@@ -45,5 +45,9 @@ systemctl enable tinyman-frontend
 systemctl start tinyman-frontend
 echo
 
+echo "install chromecast-cli"
+npm install -g chromecast-cli
+echo
+
 echo "done. installed tinyman!"
 echo

@@ -21,7 +21,7 @@ const Chromecast = ({ip}) => {
 
   const click1 = async (control) => {
     try {
-      const res = await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=yt_get`);
+      const res = await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=pause`);
       const text = await res.text();
       alert(text);
     } catch (e) {
@@ -30,7 +30,7 @@ const Chromecast = ({ip}) => {
   };
   const click2 = async (control) => {
     try {
-      const res = await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=yt_aet`);
+      const res = await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=unpause`);
       const text = await res.text();
       alert(text);
     } catch (e) {
@@ -43,8 +43,8 @@ const Chromecast = ({ip}) => {
       {data?.name}
       chromecast @ {ip}
       <div>
-        <button onClick={click1}>yt_get</button>
-        <button onClick={click2}>yt_set</button>
+        <button onClick={click1}>pause</button>
+        <button onClick={click2}>unpause</button>
       </div>
       {data}
     </div>
