@@ -2,10 +2,16 @@
 [[ $EUID -ne 0 ]] && echo "You must be running as user root." && exit 1
 
 [ ! -z "$1" ] && echo starting socat && socat tcp-l:9009,crlf,reuseaddr,fork SYSTEM:${BASH_SOURCE[0]}
+
 read REQ
 REQ_URL=$(echo $REQ | cut -f2 -d' ')
 COMMAND=$(echo ${REQ_URL#?} | cut -f1 -d'?')
-PARAM=$(echo ${REQ_URL#?} | cut -f2 -d'?')
+QUERY_STRING=$(echo ${REQ_URL#?} | cut -f2 -d'?')
+declare -A param   
+while IFS='=' read -r -d '&' key value && [[ -n "$key" ]]; do
+    param["$key"]=$value
+done <<<"${QUERY_STRING}&"
+
 case $COMMAND in
   '')
     echo 'HTTP/1.1 200 OK'
@@ -43,7 +49,7 @@ case $COMMAND in
     echo '"reboot",'
     echo '"poweroff",'
     echo '"sysinfo",'
-    echo '"chromecast"'
+    echo '"chromecast_get"'
     echo ']'
     ;;
   reboot)
@@ -72,14 +78,14 @@ case $COMMAND in
     echo
     sysinfo -ej
     ;;
-  chromecast)
+  chromecast_get)
     echo 'HTTP/1.1 200 OK'
     echo 'Content-Type: application/json'
     echo 'Access-Control-Allow-Origin: *'
     echo 'Connection: close'
     echo
     echo $PARAM
-    curl http://192.168.0.243:8008/setup/eureka_info?options=detail
+    curl "http://${PARAM['ip']}:8008/setup/eureka_info?options=detail"
     ;;
   *)
     echo -n "Unknown command: $COMMAND"
