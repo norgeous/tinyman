@@ -4,7 +4,8 @@
 [ ! -z "$1" ] && echo starting socat && socat tcp-l:9009,crlf,reuseaddr,fork SYSTEM:${BASH_SOURCE[0]}
 read REQ
 REQ_URL=$(echo $REQ | cut -f2 -d' ')
-COMMAND="${REQ_URL#?}"
+COMMAND=$(echo ${REQ_URL#?} | cut -f1 -d'?')
+PARAM=$(echo ${REQ_URL#?} | cut -f2 -d'?')
 case $COMMAND in
   '')
     echo 'HTTP/1.1 200 OK'
@@ -77,7 +78,7 @@ case $COMMAND in
     echo 'Access-Control-Allow-Origin: *'
     echo 'Connection: close'
     echo
-    echo $REQ
+    echo $PARAM
     curl http://192.168.0.243:8008/setup/eureka_info?options=detail
     ;;
   *)
