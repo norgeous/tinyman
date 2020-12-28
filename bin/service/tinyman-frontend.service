@@ -1,0 +1,8 @@
+[Unit]
+Description=tinyman-frontend
+After=network.target
+[Service]
+ExecStart=/opt/tinyman/bin/tinyman-frontend.sh
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target

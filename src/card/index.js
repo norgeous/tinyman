@@ -1,0 +1,62 @@
+import { useEffect, useState } from 'react';
+import fetch from 'node-fetch';
+import fetchTimeout from '../util/fetchTimeout';
+
+import Card from './Card';
+import CardFront from './CardFront';
+import CardBack from './CardBack';
+
+const HydratedCard = ({endpoint}) => {
+  const [now, setNow] = useState(0);
+  const [timeOfNextUpdate, setTimeOfNextUpdate] = useState(0);
+  const [status, setStatus] = useState(null);
+  const [data, setData] = useState(null);
+  
+  useEffect(() => {
+    if(status !== 'error') {
+      const polling = setInterval(() => { setNow(Date.now()); }, 80);
+      return () => clearInterval(polling);
+    }
+  }, [status]);
+
+  useEffect(() => {
+    if(!['error', 'loading', 'offline'].includes(status)) {
+      const fetchData = async () => {
+        try {
+          setStatus('loading');
+          const res = await fetch(`${endpoint}:9009/`);
+          // const res = await fetchTimeout(`${endpoint}:9009/`, 3000);
+          const json = await res.json();
+          setData(json);
+          setTimeOfNextUpdate(Date.now() + (json?.ENUM_TIME*1000||0) + 10000);
+          setStatus(`done`);
+        } catch (e) {
+          console.log(e);
+          setStatus('offline');
+        }
+      };
+      if(now > timeOfNextUpdate) fetchData();
+      else setStatus(`${Math.ceil(timeOfNextUpdate - Date.now())}ms`)
+    }
+  }, [endpoint, now]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const header = (
+    <header>
+      <h2 className="title">{data?.HOST_NAME || endpoint}</h2>
+    </header>
+  );
+
+  return (
+    <Card status={status}>
+      {data ? [
+        <CardFront header={header} {...data} />,
+        <CardBack header={header} {...data} endpoint={endpoint}/>
+      ] : [
+        <div className="card-front">{header}no data</div>,
+        <div className="card-front">{header}no data</div>,
+      ]}
+    </Card>
+  );
+};
+
+export default HydratedCard;
