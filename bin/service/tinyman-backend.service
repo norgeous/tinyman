@@ -2,7 +2,7 @@
 Description=tinyman-backend
 After=network.target
 [Service]
-ExecStart=/opt/tinyman/bin/tinyman-backend.sh
+ExecStart=/opt/tinyman/bin/tinyman-backend.sh serve
 Restart=on-failure
 [Install]
 WantedBy=multi-user.target

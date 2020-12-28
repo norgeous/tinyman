@@ -7,7 +7,7 @@ const Controls = ({endpoint}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${endpoint}:64646/list`);
+        const res = await fetch(`${endpoint}:9009/list`);
         const json = await res.json();
         console.log(json);
         setControls(json);
@@ -22,7 +22,7 @@ const Controls = ({endpoint}) => {
 
   const click = async (control) => {
     try {
-      const res = await fetch(`${endpoint}:64646/${control}`);
+      const res = await fetch(`${endpoint}:9009/${control}`);
       const text = await res.text();
       alert(text);
     } catch (e) {

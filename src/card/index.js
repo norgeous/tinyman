@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import fetch from 'node-fetch';
-import fetchTimeout from '../util/fetchTimeout';
 
 import Card from './Card';
 import CardFront from './CardFront';
@@ -24,7 +23,7 @@ const HydratedCard = ({endpoint}) => {
       const fetchData = async () => {
         try {
           setStatus('loading');
-          const res = await fetch(`${endpoint}:9009/`);
+          const res = await fetch(`${endpoint}:9009/sysinfo`);
           // const res = await fetchTimeout(`${endpoint}:9009/`, 3000);
           const json = await res.json();
           setData(json);

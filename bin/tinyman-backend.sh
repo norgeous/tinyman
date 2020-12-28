@@ -26,11 +26,12 @@ case $COMMAND in
     hostname
     echo '<a href="/reboot">reboot</a>'
     echo '<a href="/poweroff">poweroff</a>'
+    echo '<a href="/sysinfo">sysinfo</a>'
     echo '<a href="/list">list</a>'
     echo '</body>'
     echo '</html>'
     ;;
-  'list')
+  list)
     echo 'HTTP/1.1 200 OK'
     echo 'Content-Type: application/json'
     echo 'Access-Control-Allow-Origin: *'
@@ -38,7 +39,7 @@ case $COMMAND in
     echo
     echo '['
     echo '"reboot",'
-    echo '"poweroff"'
+    echo '"poweroff",'
     echo '"sysinfo"'
     echo ']'
     ;;
