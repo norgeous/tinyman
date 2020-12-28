@@ -41,7 +41,8 @@ case $COMMAND in
     echo '"list",'
     echo '"reboot",'
     echo '"poweroff",'
-    echo '"sysinfo"'
+    echo '"sysinfo",'
+    echo '"chromecast"'
     echo ']'
     ;;
   reboot)
@@ -69,6 +70,15 @@ case $COMMAND in
     echo 'Connection: close'
     echo
     sysinfo -ej
+    ;;
+  chromecast)
+    echo 'HTTP/1.1 200 OK'
+    echo 'Content-Type: application/json'
+    echo 'Access-Control-Allow-Origin: *'
+    echo 'Connection: close'
+    echo
+    echo $REQ
+    curl http://192.168.0.243:8008/setup/eureka_info?options=detail
     ;;
   *)
     echo -n "Unknown command: $COMMAND"

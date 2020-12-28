@@ -25,7 +25,7 @@ const CardBack = ({
   NET_WLAN_RX,
   DISK_READ,
   DISK_WRITTEN,
-  endpoint,
+  ip,
 }) => {
 
   return (
@@ -35,7 +35,7 @@ const CardBack = ({
         <div>{NET_LOCAL_IP}</div>
         <div>Raspberry Pi {PI_VERSION}</div>
         <div>total RAM: {readableBytes(RAM_TOTAL  + GPU_RAM_TOTAL, 10)}</div>
-        <Controls endpoint={endpoint}/>
+        <Controls ip={ip}/>
         <div>{HOST_OS_PRETTY_NAME}</div>
         <div>kernel: {HOST_KERNEL}</div>
         <div>{HOST_START}</div>

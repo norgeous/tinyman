@@ -1,7 +1,7 @@
 import readableBytes from 'readable-bytes';
 
-import Doughnut from '../doughnut';
-import Thermometer from '../thermometer';
+import Doughnut from './doughnut';
+import Thermometer from './thermometer';
 import Of from './Of';
 
 import './CardFront.css';
@@ -31,7 +31,7 @@ const CardFront = ({
           <div className="tile">
             <h3>CPU</h3>
             <Doughnut value={CPU_USAGE} total={100} />
-            <div>{CPU_PROCESSES}p</div>
+            <div>{CPU_PROCESSES} proc</div>
           </div>
           <div className="tile">
             <h3>CPU</h3>

@@ -5,7 +5,7 @@ import Card from './Card';
 import CardFront from './CardFront';
 import CardBack from './CardBack';
 
-const HydratedCard = ({endpoint}) => {
+const PiTinyMan = ({ip}) => {
   const [now, setNow] = useState(0);
   const [timeOfNextUpdate, setTimeOfNextUpdate] = useState(0);
   const [status, setStatus] = useState(null);
@@ -23,7 +23,7 @@ const HydratedCard = ({endpoint}) => {
       const fetchData = async () => {
         try {
           setStatus('loading');
-          const res = await fetch(`${endpoint}:9009/sysinfo`);
+          const res = await fetch(`http://${ip}:9009/sysinfo`);
           const json = await res.json();
           setData(json);
           setTimeOfNextUpdate(Date.now() + (json?.ENUM_TIME*1000||0) + 10000);
@@ -36,11 +36,11 @@ const HydratedCard = ({endpoint}) => {
       if(now > timeOfNextUpdate) fetchData();
       else setStatus(`${Math.ceil(timeOfNextUpdate - Date.now())}ms`)
     }
-  }, [endpoint, now]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ip, now]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const header = (
     <header>
-      <h2 className="title">{data?.HOST_NAME || endpoint}</h2>
+      <h2 className="title">{data?.HOST_NAME || ip}</h2>
     </header>
   );
 
@@ -48,7 +48,7 @@ const HydratedCard = ({endpoint}) => {
     <Card status={status}>
       {data ? [
         <CardFront header={header} {...data} />,
-        <CardBack header={header} {...data} endpoint={endpoint}/>
+        <CardBack header={header} {...data} ip={ip}/>
       ] : [
         <div className="card-front">{header}no data</div>,
         <div className="card-front">{header}no data</div>,
@@ -57,4 +57,4 @@ const HydratedCard = ({endpoint}) => {
   );
 };
 
-export default HydratedCard;
+export default PiTinyMan;

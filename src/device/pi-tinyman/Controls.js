@@ -1,28 +1,28 @@
 import { useEffect, useState } from 'react';
 import fetch from 'node-fetch';
 
-const Controls = ({endpoint}) => {
+const Controls = ({ip}) => {
   const [controls, setControls] = useState([]);
   
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${endpoint}:9009/list`);
+        const res = await fetch(`http://${ip}:9009/list`);
         const json = await res.json();
         console.log(json);
-        if(json.every(i => (typeof i === "string"))) setControls(json);
+        if(Array.isArray(json)) setControls(json);
       } catch (e) {
         console.log(e);
       }
     };
     fetchData();
-  }, [endpoint]);
+  }, [ip]);
 
   if (controls.length === 0) return <>[ no controls ]</>;
 
   const click = async (control) => {
     try {
-      const res = await fetch(`${endpoint}:9009/${control}`);
+      const res = await fetch(`http://${ip}:9009/${control}`);
       const text = await res.text();
       alert(text);
     } catch (e) {
