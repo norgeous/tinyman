@@ -38,6 +38,7 @@ case $COMMAND in
     echo 'Connection: close'
     echo
     echo '['
+    echo '"list",'
     echo '"reboot",'
     echo '"poweroff",'
     echo '"sysinfo"'

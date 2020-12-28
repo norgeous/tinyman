@@ -5,10 +5,10 @@ cd /opt/tinyman/build
 PYTHONMAJORVERSION=$(python --version 2>&1 | cut -d' ' -f2 | cut -d'.' -f1)
 case "$PYTHONMAJORVERSION" in
   2)
-    python -m SimpleHTTPServer
+    python -m SimpleHTTPServer 9010
     ;;
     
   3)
-    python -m http.server 8000
+    python -m http.server 9010
     ;;
 esac
