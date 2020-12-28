@@ -32,14 +32,14 @@ ln -s "/opt/tinyman/bin/command/pi-model.sh" "/usr/bin/pi-model"
 echo
 
 echo "install tinyman backend server..."
-chmod a+x "/opt/tinyman/bin/service/tinyman-backend.sh"
+chmod a+x "/opt/tinyman/bin/tinyman-backend.sh"
 cp "/opt/tinyman/bin/service/tinyman-backend.service" "/etc/systemd/system/tinyman-backend.service"
 systemctl enable tinyman-backend
 systemctl start tinyman-backend
 echo
 
 echo "install tinyman frontend server..."
-chmod a+x "/opt/tinyman/bin/service/tinyman-frontend.sh"
+chmod a+x "/opt/tinyman/bin/tinyman-frontend.sh"
 cp "/opt/tinyman/bin/service/tinyman-frontend.service" "/etc/systemd/system/tinyman-frontend.service"
 systemctl enable tinyman-frontend
 systemctl start tinyman-frontend
