@@ -71,6 +71,7 @@ case $COMMAND in
       echo -e "name: ${HNAME}\n${INFO}\n${STATUS}" | jc --airport 2>/dev/null
     fi
     [[ "${PARAM['action']}" == "mute" ]] && catt -d ${PARAM['ip']} volume 0
+    [[ "${PARAM['action']}" == "set-volume" ]] && catt -d ${PARAM['ip']} volume ${PARAM['volume']}
     [[ "${PARAM['action']}" == "unmute" ]] && catt -d ${PARAM['ip']} volume 100
     
     [[ "${PARAM['action']}" == "play" ]] && catt -d ${PARAM['ip']} play
