@@ -77,7 +77,7 @@ case $COMMAND in
     [[ "${PARAM['action']}" == "pause" ]] && catt -d ${PARAM['ip']} pause
     [[ "${PARAM['action']}" == "stop" ]] && catt -d ${PARAM['ip']} stop
 
-    [[ "${PARAM['action']}" == "mungo" ]] && catt -d ${PARAM['ip']} cast "https://www.youtube.com/watch?v=8G7hZXceT2E"
+    [[ "${PARAM['action']}" == "cast" ]] && catt -d ${PARAM['ip']} cast "https://www.youtube.com/watch?v=8G7hZXceT2E"
     ;;
   *)
     echo -n "Unknown command: $COMMAND"

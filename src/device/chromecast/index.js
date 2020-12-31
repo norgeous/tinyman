@@ -38,9 +38,11 @@ const Chromecast = ({ip}) => {
       <div>
         {header}
         chromecast @ {ip}
-        {/* <div>app: {status?.applications[0].displayName}</div> */}
+        <div>app: {status?.display_name}</div>
+        <h2>{status?.title}</h2>
         <div>player_state: {status?.player_state}</div>
-        {/* <div>muted: {status?.volume.muted?'yes':'no'}</div> */}
+        <div>muted: {status?.volume_muted === 'True'?'yes':'no'}</div>
+        <div>volume: {status?.volume}</div>
         <div>
           <button onClick={() => chromecastDo('status')}>status</button>
         </div>
@@ -54,12 +56,12 @@ const Chromecast = ({ip}) => {
           <button onClick={() => chromecastDo('stop')}>stop</button>
         </div>
         <div>
-          <button onClick={() => chromecastDo('mungo')}>mungo</button>
+          <button onClick={() => chromecastDo('cast')}>cast</button>
         </div>
       </div>
       <div>
         {header}
-        <pre>{JSON.stringify(status)}</pre>
+        <pre>{JSON.stringify(status, null, '  ')}</pre>
       </div>
     </Card>
   );
