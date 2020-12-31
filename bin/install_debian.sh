@@ -45,8 +45,10 @@ systemctl enable tinyman-frontend
 systemctl start tinyman-frontend
 echo
 
-echo "install chromecast-cli"
-npm install -g chromecast-cli
+echo "install chromecast cli tool"
+# npm install -g chromecast-cli
+pip3 install catt
+apt install jc jq
 echo
 
 echo "done. installed tinyman!"

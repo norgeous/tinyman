@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import fetch from 'node-fetch';
 
 import Header from '../../card/Header';
-import Card from './Card';
+import Card from '../../card/Card';
 import CardFront from './CardFront';
 import CardBack from './CardBack';
 
@@ -44,11 +44,11 @@ const PiTinyMan = ({ip}) => {
   return (
     <Card status={status}>
       {data ? [
-        <CardFront header={header} {...data} />,
-        <CardBack header={header} {...data} ip={ip}/>
+        <CardFront key="1" header={header} {...data} />,
+        <CardBack key="2" header={header} {...data} ip={ip}/>
       ] : [
-        <div className="card-front">{header}no data</div>,
-        <div className="card-front">{header}no data</div>,
+        <div key="1" className="card-front">{header}no data</div>,
+        <div key="2" className="card-front">{header}no data</div>,
       ]}
     </Card>
   );

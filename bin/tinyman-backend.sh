@@ -60,18 +60,24 @@ case $COMMAND in
     ;;
   chromecast)
     echo 'HTTP/1.1 200 OK'
-    echo 'Content-Type: text/plain'
+    echo 'Content-Type: application/json'
     echo 'Access-Control-Allow-Origin: *'
     echo 'Connection: close'
     echo
-    [[ "${PARAM['action']}" == "info" ]]    && curl "http://${PARAM['ip']}:8008/setup/eureka_info?options=detail"
-    [[ "${PARAM['action']}" == "status" ]]  && chromecast --host ${PARAM['ip']} status
-    [[ "${PARAM['action']}" == "mute" ]]    && chromecast --host ${PARAM['ip']} mute
-    [[ "${PARAM['action']}" == "unmute" ]]  && chromecast --host ${PARAM['ip']} unmute
-    [[ "${PARAM['action']}" == "pause" ]]   && chromecast --host ${PARAM['ip']} pause && echo 'paused'
-    [[ "${PARAM['action']}" == "unpause" ]] && chromecast --host ${PARAM['ip']} unpause && echo 'unpaused'
-    [[ "${PARAM['action']}" == "stop" ]]    && chromecast --host ${PARAM['ip']} stop
+    if [[ "${PARAM['action']}" == "status" ]]; then
+      HNAME=${curl "http://${PARAM['ip']}:8008/setup/eureka_info?options=detail" | jq '.name'}
+      INFO=$(catt -d ${PARAM['ip']} info)
+      STATUS=$(catt -d ${PARAM['ip']} status)
+      echo -e "name: ${INFO}\n${INFO}\n${STATUS}" | jc --airport | jq --sort-keys
+    fi
+    [[ "${PARAM['action']}" == "mute" ]] && catt -d ${PARAM['ip']} mute
+    [[ "${PARAM['action']}" == "unmute" ]] && catt -d ${PARAM['ip']} unmute
+    
+    [[ "${PARAM['action']}" == "play" ]] && catt -d ${PARAM['ip']} play
+    [[ "${PARAM['action']}" == "pause" ]] && catt -d ${PARAM['ip']} pause
+    [[ "${PARAM['action']}" == "stop" ]] && catt -d ${PARAM['ip']} stop
     ;;
+    [[ "${PARAM['action']}" == "mungo" ]] && catt -d ${PARAM['ip']} cast "https://www.youtube.com/watch?v=8G7hZXceT2E"
   *)
     echo -n "Unknown command: $COMMAND"
     ;;
