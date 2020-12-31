@@ -43,7 +43,7 @@ const Chromecast = ({ip}) => {
         <button onClick={() => chromecastDo('unpause')}>unpause</button>
         <button onClick={() => chromecastDo('stop')}>stop</button>
       </div>
-      {data}
+      {JSON.stringify(data)}
     </div>
   );
 };
