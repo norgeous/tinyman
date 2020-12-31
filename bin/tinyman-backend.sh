@@ -10,7 +10,7 @@ QUERY_STRING=$(echo ${REQ_URL#?} | cut -f2 -d'?')
 # declare -A PARAM; for i in "${QUERY_STRING[@]}"; do IFS="=" ; set -- $i; PARAM[$1]=$2; done
 
 saveIFS=$IFS; IFS='=&'; parm=($QUERY_STRING); IFS=$saveIFS
-declare -A PARAM; for ((i=0; i<${#parm[@]}; i+=2));do; PARAM[${parm[i]}]=${parm[i+1]}; done
+declare -A PARAM; for ((i=0; i<${#parm[@]}; i+=2)); do PARAM[${parm[i]}]=${parm[i+1]}; done
 
 case $COMMAND in
   '')
