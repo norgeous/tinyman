@@ -23,7 +23,7 @@ const Chromecast = ({ip}) => {
     try {
       const res = await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=${action}`);
       const text = await res.text();
-      alert(text);
+      if(['info', 'status'].includes(action)) alert(text);
     } catch (e) {
       alert(e);
       console.log(e);
@@ -43,7 +43,6 @@ const Chromecast = ({ip}) => {
         <button onClick={() => chromecastDo('unpause')}>unpause</button>
         <button onClick={() => chromecastDo('stop')}>stop</button>
       </div>
-      {JSON.stringify(data)}
     </div>
   );
 };

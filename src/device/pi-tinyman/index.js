@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import fetch from 'node-fetch';
 
+import Header from '../../card/Header';
 import Card from './Card';
 import CardFront from './CardFront';
 import CardBack from './CardBack';
@@ -38,11 +39,7 @@ const PiTinyMan = ({ip}) => {
     }
   }, [ip, now]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const header = (
-    <header>
-      <h2 className="title">{data?.HOST_NAME || ip}</h2>
-    </header>
-  );
+  const header = <Header title={data?.HOST_NAME || ip} />;
 
   return (
     <Card status={status}>
