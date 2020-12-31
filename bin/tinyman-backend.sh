@@ -69,6 +69,13 @@ case $COMMAND in
       INFO=$(catt -d ${PARAM['ip']} info)
       STATUS=$(catt -d ${PARAM['ip']} status)
       echo -e "name: ${HNAME}\n${INFO}\n${STATUS}" | jc --airport 2>/dev/null | jq --sort-keys
+      echo "fin"
+
+
+      HNAME=$(curl -s "http://192.168.0.243:8008/setup/eureka_info?options=detail" | jq '.name' | tr -d '"')
+      INFO=$(catt -d 192.168.0.243 info)
+      STATUS=$(catt -d 192.168.0.243 status)
+      echo -e "name: ${HNAME}\n${INFO}\n${STATUS}" | jc --airport 2>/dev/null | jq --sort-keys
     fi
     [[ "${PARAM['action']}" == "mute" ]] && catt -d ${PARAM['ip']} mute
     [[ "${PARAM['action']}" == "unmute" ]] && catt -d ${PARAM['ip']} unmute
