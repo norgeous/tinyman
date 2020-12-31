@@ -35,6 +35,7 @@ const Chromecast = ({ip}) => {
       {data?.name}
       chromecast @ {ip}
       <div>
+        <button onClick={() => chromecastDo('info')}>info</button>
         <button onClick={() => chromecastDo('status')}>status</button>
         <button onClick={() => chromecastDo('mute')}>mute</button>
         <button onClick={() => chromecastDo('unmute')}>unmute</button>
