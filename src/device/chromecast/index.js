@@ -9,7 +9,7 @@ const Chromecast = ({ip}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=get`);
+        const res = await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=info`);
         const json = await res.json();
         setData(json);
       } catch (e) {
@@ -19,21 +19,13 @@ const Chromecast = ({ip}) => {
     fetchData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const click1 = async (control) => {
+  const chromecastDo = async (action) => {
     try {
-      const res = await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=pause`);
+      const res = await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=${action}`);
       const text = await res.text();
       alert(text);
     } catch (e) {
-      console.log(e);
-    }
-  };
-  const click2 = async (control) => {
-    try {
-      const res = await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=unpause`);
-      const text = await res.text();
-      alert(text);
-    } catch (e) {
+      alert(e);
       console.log(e);
     }
   };
@@ -43,8 +35,12 @@ const Chromecast = ({ip}) => {
       {data?.name}
       chromecast @ {ip}
       <div>
-        <button onClick={click1}>pause</button>
-        <button onClick={click2}>unpause</button>
+        <button onClick={() => chromecastDo('status')}>status</button>
+        <button onClick={() => chromecastDo('mute')}>mute</button>
+        <button onClick={() => chromecastDo('unmute')}>unmute</button>
+        <button onClick={() => chromecastDo('pause')}>pause</button>
+        <button onClick={() => chromecastDo('unpause')}>unpause</button>
+        <button onClick={() => chromecastDo('stop')}>stop</button>
       </div>
       {data}
     </div>

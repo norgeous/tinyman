@@ -82,6 +82,7 @@ case $COMMAND in
     echo 'Connection: close'
     echo
     echo chromecast result:
+    echo "doing action: ${PARAM['action']}, on IP: ${PARAM['ip']}"
     [[ "${PARAM['action']}" == "info" ]]    && curl "http://${PARAM['ip']}:8008/setup/eureka_info?options=detail"
     [[ "${PARAM['action']}" == "status" ]]  && chromecast --host ${PARAM['ip']} status
     [[ "${PARAM['action']}" == "mute" ]]    && chromecast --host ${PARAM['ip']} mute
