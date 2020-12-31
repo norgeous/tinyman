@@ -70,8 +70,8 @@ case $COMMAND in
       STATUS=$(catt -d ${PARAM['ip']} status)
       echo -e "name: ${HNAME}\n${INFO}\n${STATUS}" | jc --airport 2>/dev/null
     fi
-    [[ "${PARAM['action']}" == "mute" ]] && catt -d ${PARAM['ip']} mute
-    [[ "${PARAM['action']}" == "unmute" ]] && catt -d ${PARAM['ip']} unmute
+    [[ "${PARAM['action']}" == "mute" ]] && catt -d ${PARAM['ip']} volume 0
+    [[ "${PARAM['action']}" == "unmute" ]] && catt -d ${PARAM['ip']} volume 100
     
     [[ "${PARAM['action']}" == "play" ]] && catt -d ${PARAM['ip']} play
     [[ "${PARAM['action']}" == "pause" ]] && catt -d ${PARAM['ip']} pause
