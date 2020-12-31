@@ -68,7 +68,7 @@ case $COMMAND in
       HNAME=${curl "http://${PARAM['ip']}:8008/setup/eureka_info?options=detail" | jq '.name'}
       INFO=$(catt -d ${PARAM['ip']} info)
       STATUS=$(catt -d ${PARAM['ip']} status)
-      echo -e "name: ${INFO}\n${INFO}\n${STATUS}" | jc --airport | jq --sort-keys
+      echo -e "name: ${HNAME}\n${INFO}\n${STATUS}" | jc --airport | jq --sort-keys
     fi
     [[ "${PARAM['action']}" == "mute" ]] && catt -d ${PARAM['ip']} mute
     [[ "${PARAM['action']}" == "unmute" ]] && catt -d ${PARAM['ip']} unmute
