@@ -65,10 +65,10 @@ case $COMMAND in
     echo 'Connection: close'
     echo
     if [[ "${PARAM['action']}" == "status" ]]; then
-      HNAME=${curl "http://${PARAM['ip']}:8008/setup/eureka_info?options=detail" | jq '.name'}
+      HNAME=$(curl -s "http://${PARAM['ip']}:8008/setup/eureka_info?options=detail" | jq '.name' | tr -d '"')
       INFO=$(catt -d ${PARAM['ip']} info)
       STATUS=$(catt -d ${PARAM['ip']} status)
-      echo -e "name: ${HNAME}\n${INFO}\n${STATUS}" | jc --airport | jq --sort-keys
+      echo -e "name: ${HNAME}\n${INFO}\n${STATUS}" | jc --airport 2>/dev/null | jq --sort-keys
     fi
     [[ "${PARAM['action']}" == "mute" ]] && catt -d ${PARAM['ip']} mute
     [[ "${PARAM['action']}" == "unmute" ]] && catt -d ${PARAM['ip']} unmute
