@@ -78,6 +78,8 @@ case $COMMAND in
     [[ "${PARAM['action']}" == "pause" ]] && catt -d ${PARAM['ip']} pause
     [[ "${PARAM['action']}" == "stop" ]] && catt -d ${PARAM['ip']} stop
 
+    [[ "${PARAM['action']}" == "rewind" ]] && catt -d ${PARAM['ip']} rewind 30
+
     [[ "${PARAM['action']}" == "cast" ]] && catt -d ${PARAM['ip']} cast "https://www.youtube.com/watch?v=8G7hZXceT2E"
     ;;
   *)

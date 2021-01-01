@@ -4,12 +4,19 @@ import fetch from 'node-fetch';
 import Header from '../../card/Header';
 import Card from '../../card/Card';
 import VolumeSlider from './volume';
+import ToggleButton from './ToggleButton';
+
+const hmsToSec = hms => hms.split(':').reduce((acc,time) => (60 * acc) + +time);
+const secToHms = sec => new Date(sec * 1000).toISOString().substr(11, 8);
 
 const Chromecast = ({ip}) => {
   const [now, setNow] = useState(0);
   const [timeOfNextUpdate, setTimeOfNextUpdate] = useState(0);
   const [status, setStatus] = useState(null);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({
+    elapsed: 0,
+    total: 0,
+  });
   
   useEffect(() => {
     if(status !== 'error') {
@@ -25,7 +32,11 @@ const Chromecast = ({ip}) => {
           setStatus('loading');
           const res = await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=status`);
           const json = await res.json();
-          setData(json);
+          setData({
+            ...json,
+            elapsed: hmsToSec(json?.time.split(' ')[0]),
+            total: hmsToSec(json?.time.split(' ')[2]),
+          });
           setTimeOfNextUpdate(Date.now() + (json?.ENUM_TIME*1000||0) + 10000);
           setStatus(`done`);
         } catch (e) {
@@ -38,18 +49,18 @@ const Chromecast = ({ip}) => {
     }
   }, [ip, now]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const chromecastDo = async (action) => {
+  const chromecastDo = async (action, dataKey, finalState) => {
     try {
-      const res = await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=${action}`);
-      const text = await res.text();
-      if(['info', 'status'].includes(action)) alert(text);
+      dataKey && setData(d => ({ ...d, [dataKey]: 'LOADING' }));
+      await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=${action}`);
+      dataKey && setData(d => ({ ...d, [dataKey]: finalState }));
     } catch (e) {
       alert(e);
       console.log(e);
     }
   };
   
-  const setVolume = async (value) => {
+  const changeVolumeRemote = async (value) => {
     try {
       await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=set-volume&volume=${value}`);
     } catch (e) {
@@ -64,24 +75,34 @@ const Chromecast = ({ip}) => {
     <Card status={status}>
       <div>
         {header}
-        <div>app: {data?.display_name}</div>
+        <div>{data?.display_name}</div>
         <h2>{data?.title}</h2>
-        <div>player_state: {data?.player_state}</div>
-        <div>muted: {data?.volume_muted === 'True'?'yes':'no'}</div>
-        <div>volume: {data?.volume}</div>
-        <div>
-          <button onClick={() => chromecastDo('status')}>status</button>
-        </div>
+        <div>{data?.time}</div>
+        <div>{secToHms(data?.elapsed)} / {secToHms(data?.total)} ({Math.round((data?.elapsed / data?.total) * 100)}%)</div>
+        <button onClick={() => chromecastDo('rewind')}>rewind by 30 sec</button>
+        
         <div>
           <button onClick={() => chromecastDo('mute')}>mute</button>
           <button onClick={() => chromecastDo('unmute')}>unmute</button>
         </div>
         <div>
-          <VolumeSlider value={data?.volume} onChange={setVolume} />
+          <div>volume: {data?.volume}%</div>
+          <VolumeSlider
+            value={data?.volume || 0}
+            onChange={v => setData(d => ({ ...d, volume: v}))}
+            onRelease={changeVolumeRemote}
+            />
+          <div>muted: {data?.volume_muted === 'True' ? 'yes' : 'no'}</div>
         </div>
         <div>
-          <button onClick={() => chromecastDo('pause')}>pause</button>
-          <button onClick={() => chromecastDo('play')}>play</button>
+          <ToggleButton
+            state={data?.player_state}
+            buttons={{
+              LOADING: <button onClick={() => {}}>Loading</button>,
+              PLAYING: <button onClick={() => chromecastDo('pause', 'player_state', 'PAUSED')}>pause</button>,
+              PAUSED: <button onClick={() => chromecastDo('play', 'player_state', 'PLAYING')}>play</button>,
+            }}
+          />
           <button onClick={() => chromecastDo('stop')}>stop</button>
         </div>
         <div>
