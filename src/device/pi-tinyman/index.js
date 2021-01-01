@@ -14,7 +14,7 @@ const PiTinyMan = ({ip}) => {
   
   useEffect(() => {
     if(status !== 'error') {
-      const polling = setInterval(() => { setNow(Date.now()); }, 80);
+      const polling = setInterval(() => { setNow(Date.now()); }, 200);
       return () => clearInterval(polling);
     }
   }, [status]);

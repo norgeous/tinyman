@@ -12,7 +12,7 @@ const Sonoff = ({ip}) => {
   
   useEffect(() => {
     if(status !== 'error') {
-      const polling = setInterval(() => { setNow(Date.now()); }, 80);
+      const polling = setInterval(() => { setNow(Date.now()); }, 200);
       return () => clearInterval(polling);
     }
   }, [status]);
@@ -41,7 +41,13 @@ const Sonoff = ({ip}) => {
 
   return (
     <Card status={status}>
-      <div key="1" className="card-front">{header}no data</div>
+      <div key="1" className="card-front" style={{background:'#f0f'}}>
+        {header}
+        <div>Power: {data?.Status.Power}</div>
+        <button onClick={async () => {
+          await fetch(`http://192.168.0.40:9009/sonoff?ip=${ip}&action=Power%20TOGGLE`);
+        }}>toggle</button>
+      </div>
       <div key="2" className="card-front">
         {header}
         <pre>{JSON.stringify(data, null, '  ')}</pre>
