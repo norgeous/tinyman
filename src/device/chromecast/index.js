@@ -34,8 +34,8 @@ const Chromecast = ({ip}) => {
           const json = await res.json();
           setData({
             ...json,
-            elapsed: hmsToSec(json?.time.split(' ')[0]),
-            total: hmsToSec(json?.time.split(' ')[2]),
+            ...(json?.time && {elapsed: hmsToSec(json?.time.split(' ')[0])}),
+            ...(json?.time && {total: hmsToSec(json?.time.split(' ')[2])}),
           });
           setTimeOfNextUpdate(Date.now() + (json?.ENUM_TIME*1000||0) + 10000);
           setStatus(`done`);
@@ -78,7 +78,9 @@ const Chromecast = ({ip}) => {
         <div>{data?.display_name}</div>
         <h2>{data?.title}</h2>
         <div>{data?.time}</div>
-        <div>{secToHms(data?.elapsed)} / {secToHms(data?.total)} ({Math.round((data?.elapsed / data?.total) * 100)}%)</div>
+        {data?.elapsed && data?.total && 
+          <div>{secToHms(data?.elapsed)} / {secToHms(data?.total)} ({Math.round((data?.elapsed / data?.total) * 100)}%)</div>
+        }
         <button onClick={() => chromecastDo('rewind')}>rewind by 30 sec</button>
         
         <div>
@@ -91,7 +93,7 @@ const Chromecast = ({ip}) => {
             value={data?.volume || 0}
             onChange={v => setData(d => ({ ...d, volume: v}))}
             onRelease={changeVolumeRemote}
-            />
+          />
           <div>muted: {data?.volume_muted === 'True' ? 'yes' : 'no'}</div>
         </div>
         <div>
