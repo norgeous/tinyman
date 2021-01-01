@@ -8,7 +8,7 @@ const VolumeSlider = ({value, onChange, onRelease}) => {
   };
 
   return (
-    <>
+    <div style={{padding: '0 20px'}}>
       <input 
         type="range"
         min="0"
@@ -20,7 +20,7 @@ const VolumeSlider = ({value, onChange, onRelease}) => {
         step="1"
         style={{width: '100%'}}
       />
-    </>
+    </div>
   );
 };
 

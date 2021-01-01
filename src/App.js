@@ -4,6 +4,7 @@ import Device from './device';
 
 const endpoints = [
   {type: 'chromecast', ip: '192.168.0.243'}, // chromecast: chalk
+  {type: 'sonoff',     ip: '192.168.0.202'}, // sonoff tarantula-lamp
   {type: 'pi/tinyman', ip: '192.168.0.100'}, // lakitu
   {type: 'pi/tinyman', ip: '192.168.0.40'},  // tvpi
   {type: 'pi/tinyman', ip: '192.168.0.13'},  // retropie

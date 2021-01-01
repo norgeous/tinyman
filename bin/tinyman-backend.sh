@@ -82,6 +82,14 @@ case $COMMAND in
 
     [[ "${PARAM['action']}" == "cast" ]] && catt -d ${PARAM['ip']} cast "https://www.youtube.com/watch?v=8G7hZXceT2E"
     ;;
+  sonoff)
+    echo 'HTTP/1.1 200 OK'
+    echo 'Content-Type: application/json'
+    echo 'Access-Control-Allow-Origin: *'
+    echo 'Connection: close'
+    echo
+    curl -s "http://${PARAM['ip']}/cm?cmnd=${PARAM['action']}"
+    ;;
   *)
     echo -n "Unknown command: $COMMAND"
     ;;
