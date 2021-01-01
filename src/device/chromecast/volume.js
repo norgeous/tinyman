@@ -18,6 +18,7 @@ const VolumeSlider = ({value, onChange, onRelease}) => {
         onMouseUp={handleRelease}
         onTouchEnd={handleRelease}
         step="1"
+        style={{width: '100%'}}
       />
     </>
   );
