@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import fetch from 'node-fetch';
 
+import useEndpoint from '../../hooks/useEndpoint';
 import Header from '../../card/Header';
 import Card from '../../card/Card';
 import VolumeSlider from './volume';
@@ -10,44 +11,12 @@ const hmsToSec = hms => hms.split(':').reduce((acc,time) => (60 * acc) + +time);
 const secToHms = sec => new Date(sec * 1000).toISOString().substr(11, 8);
 
 const Chromecast = ({ip}) => {
-  const [now, setNow] = useState(0);
-  const [timeOfNextUpdate, setTimeOfNextUpdate] = useState(0);
-  const [status, setStatus] = useState(null);
-  const [data, setData] = useState({
-    elapsed: 0,
-    total: 0,
+  const postProcessor = data => ({
+    ...data,
+    ...(data?.time && {elapsed: hmsToSec(data?.time.split(' ')[0])}),
+    ...(data?.time && {total: hmsToSec(data?.time.split(' ')[2])}),
   });
-  
-  useEffect(() => {
-    if(status !== 'error') {
-      const polling = setInterval(() => { setNow(Date.now()); }, 200);
-      return () => clearInterval(polling);
-    }
-  }, [status]);
-
-  useEffect(() => {
-    if(!['error', 'loading', 'offline'].includes(status)) {
-      const fetchData = async () => {
-        try {
-          setStatus('loading');
-          const res = await fetch(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=status`);
-          const json = await res.json();
-          setData({
-            ...json,
-            ...(json?.time && {elapsed: hmsToSec(json?.time.split(' ')[0])}),
-            ...(json?.time && {total: hmsToSec(json?.time.split(' ')[2])}),
-          });
-          setTimeOfNextUpdate(Date.now() + (json?.ENUM_TIME*1000||0) + 10000);
-          setStatus(`done`);
-        } catch (e) {
-          console.log(e);
-          setStatus('offline');
-        }
-      };
-      if(now > timeOfNextUpdate) fetchData();
-      else setStatus(`${Math.ceil(timeOfNextUpdate - Date.now())}ms`)
-    }
-  }, [ip, now]); // eslint-disable-line react-hooks/exhaustive-deps
+  const { status, data, setData } = useEndpoint(`http://192.168.0.40:9009/chromecast?ip=${ip}&action=status`, postProcessor);
 
   const chromecastDo = async (action, dataKey, finalState) => {
     try {
