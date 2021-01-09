@@ -21,9 +21,10 @@ systemctl disable tinyman-frontend
 echo
 
 echo "clone tinyman repo..."
-cd /opt
-rm -rf /opt/tinyman
+cd "/opt"
+rm -rf "/opt/tinyman"
 git clone https://github.com/norgeous/tinyman.git
+npm install
 echo
 
 echo "install tinyman commands (pi-model, sysinfo)..."
