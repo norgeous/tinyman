@@ -1,8 +1,8 @@
 [Unit]
-Description=tinyman-backend
+Description=tinyman-backend2
 After=network.target
 [Service]
-ExecStart=/opt/tinyman/bin/tinyman-backend.sh serve
+ExecStart=/usr/local/bin/node /opt/tinyman/server/index.js
 Restart=always
 [Install]
 WantedBy=multi-user.target

@@ -22,6 +22,7 @@ echo
 
 echo "clone tinyman repo..."
 cd /opt
+rm -rf /opt/tinyman
 git clone https://github.com/norgeous/tinyman.git
 echo
 
@@ -34,6 +35,7 @@ echo
 
 echo "install tinyman backend server..."
 chmod a+x "/opt/tinyman/bin/tinyman-backend.sh"
+rm "/etc/systemd/system/tinyman-backend.service"
 cp "/opt/tinyman/bin/service/tinyman-backend.service" "/etc/systemd/system/tinyman-backend.service"
 systemctl enable tinyman-backend
 systemctl start tinyman-backend
@@ -41,10 +43,13 @@ echo
 
 echo "install tinyman frontend server..."
 chmod a+x "/opt/tinyman/bin/tinyman-frontend.sh"
+rm "/etc/systemd/system/tinyman-frontend.service"
 cp "/opt/tinyman/bin/service/tinyman-frontend.service" "/etc/systemd/system/tinyman-frontend.service"
 systemctl enable tinyman-frontend
 systemctl start tinyman-frontend
 echo
+
+systemctl daemon-reload
 
 echo "install chromecast cli tool"
 pip3 install catt
