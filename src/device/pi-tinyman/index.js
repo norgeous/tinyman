@@ -13,7 +13,7 @@ const PiTinyMan = ({ip}) => {
     <Card status={status}>
       {data ? [
         <CardFront key="1" header={header} {...data} />,
-        <CardBack key="2" header={header} {...data} ip={ip}/>
+        <CardBack key="2" header={header} {...data} ip={ip} />
       ] : [
         <div key="1" className="card-front">{header}no data</div>,
         <div key="2" className="card-front">{header}no data</div>,

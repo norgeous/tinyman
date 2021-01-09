@@ -7,6 +7,7 @@ echo "install deps..."
 [ ! -x "$(command -v dig)" ] && echo "installing dnsutils/dig..." && apt install -y dnsutils
 [ ! -x "$(command -v hdparm)" ] && echo "installing sysstat/hdparm..." && apt install -y hdparm
 [ ! -x "$(command -v socat)" ] && echo "installing socat..." && apt install -y socat
+[ ! -x "$(command -v nmap)" ] && echo "installing nmap..." && apt install -y nmap
 echo
 
 echo "remove old tinyman..."
