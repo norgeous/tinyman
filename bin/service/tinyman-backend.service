@@ -1,5 +1,5 @@
 [Unit]
-Description=tinyman-backend2
+Description=tinyman-backend
 After=network.target
 [Service]
 ExecStart=/usr/local/bin/node /opt/tinyman/server/index.js

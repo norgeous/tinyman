@@ -1,11 +1,10 @@
 const nmap = require('node-nmap');
-// nmap.nmapLocation = 'nmap'; //default
 
 class nmapper {
   constructor() {
     this.nmapResults = [];
     this.error = null;
-    this.scan = new nmap.OsAndPortScan('192.168.0.0/24');
+    this.scan = new nmap.QuickScan('192.168.0.0/24');
     this.config();
     this.start();
   }
@@ -27,6 +26,7 @@ class nmapper {
   start() {
     this.scan.startScan();
     setInterval(() => {
+      console.log('starting scan');
       this.scan.startScan();
     }, 60000);
   }

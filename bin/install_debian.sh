@@ -24,6 +24,7 @@ echo "clone tinyman repo..."
 cd "/opt"
 rm -rf "/opt/tinyman"
 git clone https://github.com/norgeous/tinyman.git
+cd "/opt/tinyman"
 npm install
 echo
 
