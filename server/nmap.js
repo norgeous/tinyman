@@ -16,7 +16,6 @@ class nmapper {
     this.scan = new nmap.OsAndPortScan('192.168.0.0/24');
 
     this.scan.on('complete', (data) => {
-      console.log('got results');
       this.nmapResults = data;
       this.error = null;
       this.scanEndTime = Date.now();
