@@ -35,7 +35,7 @@ class nmapper {
     this.config();
     this.scan.startScan();
     setInterval(() => {
-      console.log('starting scan');
+      console.log('starting scan (from interval)');
       this.config();
       this.scan.startScan();
     }, 60 * 1000);
