@@ -1,17 +1,9 @@
 const express = require('express');
-// const path = require('path');
 const app = express();
-const nmapper = require('./nmap');
+const Nmap = require('./pages/nmap');
 
-const scan = new nmapper();
+const nmap = new Nmap();
 
-// app.use(express.static(path.join(__dirname, 'build')));
-// app.get('/', function (req, res) {
-//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
-// });
-
-app.get('/nmap', (req, res) => {
-  return res.send(scan.getResults());
-});
+app.get('/nmap', nmap.handleRequest);
 
 app.listen(process.env.PORT || 8080);
