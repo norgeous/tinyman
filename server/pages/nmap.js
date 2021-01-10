@@ -11,7 +11,11 @@ class Nmap {
   async start() {
     console.log('starting scan');
     this.scanStartTime = Date.now();
-    this.nmapResults = await nmap();
+    const opts = {
+      ports: '1-65535',
+      range: ['192.168.0.0/24'],
+    };
+    this.nmapResults = await nmap(opts);
     this.scanEndTime = Date.now();
 
     const duration = this.scanEndTime - this.scanStartTime;
