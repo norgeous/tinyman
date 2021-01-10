@@ -1,12 +1,9 @@
-const nmap = require('libnmap');
+const { Subnet } = require('netmap');
+ 
+const nmapPromise = () => {
+  const subnet = new Subnet('192.168.0.0');
+  return subnet.scanForOpenPorts([22, 80, 515, 8080, 8384, 9010, 9100]);
+};
 
-function nmapPromise(opts) {
-  return new Promise((fulfill, reject) => {
-    nmap.scan(opts, (err, report) => {
-      if (err) reject(err);
-      fulfill(report);
-    });
-  });
- }
 
  module.exports = nmapPromise;
