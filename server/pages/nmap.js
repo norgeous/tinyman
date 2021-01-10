@@ -11,12 +11,8 @@ class Nmap {
   async start() {
     console.log('starting scan');
     this.scanStartTime = Date.now();
-    const opts = {
-      ports: '1-65535',
-      range: ['192.168.0.0/24'],
-    };
-    this.nmapResults = await nmap(opts).catch(e => {
-      throw new Error(e);
+    this.nmapResults = await nmap().catch(e => {
+      throw e;
     });
     this.scanEndTime = Date.now();
 
