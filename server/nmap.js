@@ -5,7 +5,6 @@ class nmapper {
     this.nmapResults = [];
     this.error = null;
     this.scan = new nmap.QuickScan('192.168.0.0/24');
-    this.config();
     this.start();
   }
 
@@ -24,9 +23,12 @@ class nmapper {
   }
   
   start() {
+    console.log('starting scan');
+    this.config();
     this.scan.startScan();
     setInterval(() => {
       console.log('starting scan');
+      this.config();
       this.scan.startScan();
     }, 60000);
   }
