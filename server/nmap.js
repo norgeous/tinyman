@@ -1,9 +1,8 @@
 const nmap = require('libnmap');
 
 const opts = {
-  range: [
-    '192.168.0.0/24',
-  ]
+  ports: '1-65535',
+  range: ['192.168.0.0/26'],
 };
 
 class nmapper {
@@ -26,7 +25,7 @@ class nmapper {
       this.scanEndTime = Date.now();
       const duration = this.scanEndTime - this.scanStartTime;
       console.log(`scan took ${(duration / 1000) / 60}min`);
-      console.log(`starting next scan in ${duration*2}s`);
+      console.log(`starting next scan in ${((duration * 2) / 1000) / 60}ms`);
   
       setTimeout(this.start, duration * 2); // recurse
     });

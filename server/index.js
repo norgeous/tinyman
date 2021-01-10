@@ -1,5 +1,5 @@
 const express = require('express');
-const path = require('path');
+// const path = require('path');
 const app = express();
 const nmapper = require('./nmap');
 
@@ -10,7 +10,7 @@ const scan = new nmapper();
 //   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 // });
 
-app.get('/nmap', async (req, res) => {
+app.get('/nmap', (req, res) => {
   return res.send(scan.getResults());
 });
 
