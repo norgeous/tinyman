@@ -15,18 +15,24 @@ class Nmap {
       ports: '1-65535',
       range: ['192.168.0.0/24'],
     };
-    this.nmapResults = await nmap(opts);
+    this.nmapResults = await nmap(opts).catch(e => {
+      throw new Error(e);
+    });
     this.scanEndTime = Date.now();
 
     const duration = this.scanEndTime - this.scanStartTime;
     console.log(`scan took ${(duration / 1000) / 60}min`);
     console.log(`starting next scan in ${((duration * 2) / 1000) / 60}min`);
   
-    setTimeout(this.start, duration * 2); // recurse
+    setTimeout(() => {
+      this.start();
+    }, duration * 2); // recurse
   }
 
-  handleRequest(req, res) {
+  getHandleRequest() {
+    return (req, res) => {
       return res.send(this.nmapResults);
+    }
   }
 }
 
