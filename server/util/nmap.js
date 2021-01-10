@@ -9,14 +9,11 @@ const nmapPromise = () => {
     8080,
     8384,
     9010,
-    9100,
   ])
   .then(results => results.map(host => {
     return {
       ...host,
-      ports: host.ports.reduce((acc, port) => {
-        return acc.push(port.open ? port : null);
-      }, []),
+      ports: host.ports.filter(port => port.open),
     };
   }));
 };
