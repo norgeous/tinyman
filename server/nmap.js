@@ -22,8 +22,8 @@ class nmapper {
       this.scanEndTime = Date.now();
       const duration = this.scanEndTime - this.scanStartTime;
       console.log(`scan took ${(duration / 1000) / 60}min`);
-      console.log('starting next scan in 60s');
-      setTimeout(this.start, 60 * 1000);
+      console.log(`starting next scan in ${duration}s`);
+      setTimeout(this.start, duration * 2);
     });
   
     this.scan.on('error', (error) => {
