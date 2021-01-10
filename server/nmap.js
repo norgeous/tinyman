@@ -4,15 +4,23 @@ class nmapper {
   constructor() {
     this.nmapResults = [];
     this.error = null;
-    this.scan = new nmap.QuickScan('192.168.0.0/24');
+    this.scan = null;
+    this.scanStartTime = 0;
+    this.scanEndTime = 0;
     this.start();
   }
 
   config() {
+    this.scanStartTime = Date.now();
+    this.scan = new nmap.QuickScan('192.168.0.0/24');
+    // this.scan = new nmap.OsAndPortScan('192.168.0.0/24');
+
     this.scan.on('complete', (data) => {
       console.log('got results');
       this.nmapResults = data;
       this.error = null;
+      this.scanEndTime = Date.now();
+      console.log(`scan took ${this.scanEndTime - this.scanStartTime}ms`);
     });
   
     this.scan.on('error', (error) => {
@@ -30,7 +38,7 @@ class nmapper {
       console.log('starting scan');
       this.config();
       this.scan.startScan();
-    }, 60000);
+    }, 60 * 1000);
   }
 
   getResults() {
