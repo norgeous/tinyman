@@ -6,7 +6,7 @@ const nmapPromise = async () => {
   const subnet = new Subnet('192.168.0.0');
   return new Promise(async (resolve, reject) => {
     try {
-      const arp = await arpping.findMyInfo();
+      const arp = await arpping.discover();
       const hosts = await subnet.getHosts();
       const ports = await subnet.scanForOpenPorts([
         '1-1024',
