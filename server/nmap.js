@@ -2,7 +2,7 @@ const nmap = require('node-nmap');
 
 class nmapper {
   constructor() {
-    this.nmapResults = [];
+    this.nmapResults = ['loading'];
     this.error = null;
     this.scan = null;
     this.scanStartTime = 0;
@@ -10,7 +10,8 @@ class nmapper {
     this.start();
   }
 
-  config() {
+  start() {
+    console.log('starting scan');
     this.scanStartTime = Date.now();
     // this.scan = new nmap.QuickScan('192.168.0.0/24');
     this.scan = new nmap.OsAndPortScan('192.168.0.0/24');
@@ -19,7 +20,10 @@ class nmapper {
       this.nmapResults = data;
       this.error = null;
       this.scanEndTime = Date.now();
-      console.log(`scan took ${this.scanEndTime - this.scanStartTime}ms`);
+      const duration = this.scanEndTime - this.scanStartTime;
+      console.log(`scan took ${duration}ms`);
+      console.log('starting next scan in 60s');
+      setInterval(this.start, 60 * 1000);
     });
   
     this.scan.on('error', (error) => {
@@ -27,17 +31,8 @@ class nmapper {
       this.nmapResults = null;
       this.error = error;
     });
-  }
-  
-  start() {
-    console.log('starting scan');
-    this.config();
+    
     this.scan.startScan();
-    setInterval(() => {
-      console.log('starting scan (from interval)');
-      this.config();
-      this.scan.startScan();
-    }, 60 * 1000);
   }
 
   getResults() {
