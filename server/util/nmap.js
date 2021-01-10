@@ -9,7 +9,7 @@ const nmapPromise = async () => {
       const arp = await arpping.discover();
       const hosts = await subnet.getHosts();
       const ports = await subnet.scanForOpenPorts([
-        '1-1024',
+        // '1-1024',
         22,
         80,
         3000,
