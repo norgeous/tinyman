@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import fetch from 'node-fetch';
 
 const useEndpoint = (endpoint, postProcessor) => {
-  const [now, setNow] = useState(0);
-  const [timeOfNextUpdate, setTimeOfNextUpdate] = useState(0);
+  const [now, setNow] = useState(Date.now());
+  const [timeOfNextUpdate, setTimeOfNextUpdate] = useState(Date.now());
   const [status, setStatus] = useState(null);
   const [data, setData] = useState(null);
   
   useEffect(() => {
     if(status !== 'offline') {
-      const polling = setInterval(() => { setNow(Date.now()); }, 200);
+      const polling = setInterval(() => { setNow(Date.now()); }, 1000);
       return () => clearInterval(polling);
     }
   }, [status]);

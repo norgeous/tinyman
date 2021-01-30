@@ -1,0 +1,10 @@
+[Unit]
+Description=tinyman
+After=network.target
+[Service]
+WorkingDirectory=/opt/tinyman/
+# WorkingDirectory=/home/pi/sync/repos/tinyman/
+ExecStart=bin/tinyman.sh
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target

@@ -1,6 +1,18 @@
-const Header = ({title}) => (
+import { IoMdSwap } from 'react-icons/io';
+
+import './Header.css';
+
+const Header = ({title, icon: Icon, onClickFlip}) => (
   <header>
-    <h2 className="title">{title}</h2>
+    <div className="left">
+      <Icon size="30" />
+    </div>
+    <div className="right">
+      <button onClick={onClickFlip}>
+        <IoMdSwap size="30" />
+      </button>
+    </div>
+    <div className="title">{title}</div>
   </header>
 );
 

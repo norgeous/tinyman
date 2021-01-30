@@ -1,0 +1,37 @@
+.left {
+  position: absolute;
+  left: 0;
+  padding: 10px;
+}
+
+.right {
+  position: absolute;
+  right: 0;
+}
+
+button {
+  border: none;
+  background: transparent;
+  padding: 10px;
+  cursor: pointer;
+}
+
+header {
+  background: #0ff;
+  color: black;
+}
+
+header .title {
+  height: 30px;
+  line-height: 30px;
+  padding: 10px 50px;
+  font-size: 18px;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+svg {
+  display: block;
+}
