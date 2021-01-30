@@ -23,7 +23,7 @@ bash <(curl -s https://raw.githubusercontent.com/norgeous/tinyman/master/bin/ins
 ##### tinyman servers
 
 ```sh
-systemctl status tinyman
+sudo systemctl status tinyman
 ```
 
 ##### pi-model

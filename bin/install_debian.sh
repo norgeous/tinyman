@@ -36,7 +36,7 @@ echo
 
 echo "install tinyman server..."
 chmod a+x "/opt/tinyman/bin/tinyman.sh"
-cp "/opt/tinyman/bin/service/tinyman.service" "/etc/systemd/system/tinyman.service"
+cp "/opt/tinyman/bin/tinyman.service" "/etc/systemd/system/tinyman.service"
 systemctl enable tinyman
 systemctl start tinyman
 systemctl daemon-reload
