@@ -18,14 +18,12 @@ bash <(curl -s https://raw.githubusercontent.com/norgeous/tinyman/master/bin/ins
 
 ### Usage
 
-- `http://[ip-of-rpi]:9010` for frontend services
-- `http://[ip-of-rpi]:9009` for backend services
+- `http://[ip-of-rpi]:8080`
 
 ##### tinyman servers
 
 ```sh
-systemctl status tinyman-frontend
-systemctl status tinyman-backend
+systemctl status tinyman
 ```
 
 ##### pi-model
